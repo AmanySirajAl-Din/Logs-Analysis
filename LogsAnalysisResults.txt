@@ -1,0 +1,61 @@
+Q1. What are the most popular three articles of all time?
+
+DB run:
+news=# SELECT articles.slug, count(*) as countLog FROM log, articles WHERE '/article/'||articles.slug = log.path GROUP BY articles.slug ORDER BY countLog DESC LIMIT 3;
+
+        slug        | countlog
+--------------------+----------
+ candidate-is-jerk  |   338647
+ bears-love-berries |   253801
+ bad-things-gone    |   170098
+(3 rows)
+
+vagrant@vagrant:/vagrant$ python LogsAnalysis.py:
+
+The most popular three articles of all time:
+
+   candidate-is-jerk - 338647 views
+   bears-love-berries - 253801 views
+   bad-things-gone - 170098 views
+
+====================================================================================
+
+Q2. Who are the most popular article authors of all time?
+
+DB run:
+news=# SELECT authors.name, count(*) as countlog FROM authors, articles, log WHERE articles.author = authors.id AND  '/article/'||articles.slug = log.path GROUP BY authors.name ORDER BY countLog DESC LIMIT 3;
+
+          name          | countlog
+------------------------+----------
+ Ursula La Multa        |   507594
+ Rudolf von Treppenwitz |   423457
+ Anonymous Contributor  |   170098
+(3 rows)
+
+vagrant@vagrant:/vagrant$ python LogsAnalysis.py:
+
+ The most popular article authors of all time:
+
+   Ursula La Multa - 507594 views
+   Rudolf von Treppenwitz - 423457 views
+   Anonymous Contributor - 170098 views
+   Markoff Chaney - 84557 views
+
+======================================================================================
+
+3. On which days did more than 1% of requests lead to errors? 
+
+After creating 2 views (allLogs, errorLogs)
+run this query 
+
+news=# select errorLogs.date, (100.0*counterror/countlogs) as x from allLogs, errorLogs where allLogs.date = errorLogs.date AND counterror > countLogs/100;
+       date        |         x
+-------------------+--------------------
+ july      17,2016 | 2.2626862468027260
+(1 row)
+
+vagrant@vagrant:/vagrant$ python LogsAnalysis.py:
+
+ Days which has more than 1% of requests lead to errors:
+
+   july      17,2016 - 2.2626862468027260 % errors
