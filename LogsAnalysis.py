@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # import DB library we are using..
 import psycopg2
 
