@@ -11,10 +11,10 @@ def popularArticles():
     
     # excute query to find the answer of the qustion
     cursor.execute("""
-        SELECT articles.slug, count(*) as countLog 
+        SELECT articles.title, count(*) as countLog 
         FROM log, articles 
         WHERE '/article/'||articles.slug = log.path 
-        GROUP BY articles.slug 
+        GROUP BY articles.title 
         ORDER BY countLog DESC 
         LIMIT 3;
         """)
