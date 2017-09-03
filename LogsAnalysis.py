@@ -21,13 +21,13 @@ def popularArticles():
     
     # Save results by fetch it all
     popularArticles_results = cursor.fetchall()
-    # 5-Print Out results on screen
+    # Print Out results on screen
     print "\n The most popular three articles of all time:\n"
     # Loop to read data from table, row by row
     for article in popularArticles_results:
         # Python function to convert a list to a string for display
         # source : https://www.decalage.info/en/python/print_list
-        print '"' + ('" - '.join(map(str, article))) + ' views'
+        print '   '+(' - '.join(map(str, article))) + ' views'
     
     # close the Connection
     conn.close()
@@ -46,14 +46,13 @@ def popularAuthors():
         WHERE articles.author = authors.id 
             AND  '/article/'||articles.slug = log.path 
         GROUP BY authors.name 
-        ORDER BY countLog DESC 
-        LIMIT 3;
+        ORDER BY countLog DESC;
         """)
     popularAuthors_results = cursor.fetchall()
     
     print "\n The most popular article authors of all time:\n"
     for author in popularAuthors_results:
-        print(' - '.join(map(str, author))) + ' views'
+        print'   '+(' - '.join(map(str, author))) + ' views'
     
     conn.close()
 
@@ -75,7 +74,7 @@ def requests_lead_errors():
     
     print "\n Days which has more than 1% of requests lead to errors: \n"
     for logRequest in logRequest_results:
-        print(' - '.join(map(str, logRequest))) + ' % errors'
+        print'   '+(' - '.join(map(str, logRequest))) + ' % errors'
     
     conn.close()
 
