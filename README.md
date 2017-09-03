@@ -17,12 +17,12 @@ To start on this project, you'll need database software (provided by a Linux vir
 
 The virtual machine:
 
-    1- This project makes use of the Linux-based virtual machine (VM).
-    2- If you need to bring the virtual machine back online (with vagrant up), do so now. Then log into it with vagrant ssh.
+1- This project makes use of the Linux-based virtual machine (VM).
+2- If you need to bring the virtual machine back online (with vagrant up), do so now. Then log into it with vagrant ssh.
     
 Download the data:
 
-    Next, [download the data here](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip). You will need to unzip this file after downloading it. The file inside is called newsdata.sql. Put this file into the vagrant directory, which is shared with your virtual machine.
+Next, [download the data here](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip). You will need to unzip this file after downloading it. The file inside is called newsdata.sql. Put this file into the vagrant directory, which is shared with your virtual machine.
     
 Explore the data:
 
@@ -48,22 +48,24 @@ Here are the questions the reporting tool should answer.
 #### 1. What are the most popular three articles of all time? 
 Q1. Which articles have been accessed the most? 
     
-    Present this information as a sorted list with the most popular article at the top.
+Present this information as a sorted list with the most popular article at the top.
 
 Q2. Who are the most popular article authors of all time? 
     
-    That is, when you sum up all of the articles each author has written, which authors get the most page views? Present this as a sorted list with the most popular author at the top.
+That is, when you sum up all of the articles each author has written, which authors get the most page views? Present this as a sorted list with the most popular author at the top.
 
 Q3. On which days did more than 1% of requests lead to errors? 
 
-    The log table includes a column status that indicates the HTTP status code that the news site sent to the user's browser. (Refer back to this lesson if you want to review the idea of HTTP status codes.)
+The log table includes a column status that indicates the HTTP status code that the news site sent to the user's browser. (Refer back to this lesson if you want to review the idea of HTTP status codes.)
 
 ## Before Answering these questions:
 #### You need to create these views in your database:
 
 1- allLogs view:
 
-news=# ```CREATE VIEW allLogs AS SELECT to_char(time,'month dd,yyyy') as date, count(*) as countLogs FROM log GROUP BY date;```
+news=# ```CREATE VIEW allLogs 
+AS SELECT to_char(time,'month dd,yyyy') as date, count(*) as countLogs 
+FROM log GROUP BY date;```
     
 then you can display this view data by this query:
     
@@ -72,7 +74,6 @@ news=# ```SELECT * FROM allLogs;```
 you will get 31 rows as output
 
        date        | countlogs
--------------------+-----------
  july      01,2016 |     38705
  july      02,2016 |     55200
  july      03,2016 |     54866
@@ -108,7 +109,9 @@ you will get 31 rows as output
 
 2- errorLogs view:
 
-news=# ```CREATE VIEW errorLogs AS SELECT to_char(time,'month dd,yyyy') as date, count(*) as countError FROM log WHERE status= '404 NOT FOUND' GROUP BY date;```
+news=# ```CREATE VIEW errorLogs AS 
+SELECT to_char(time,'month dd,yyyy') as date, count(*) as countError 
+FROM log WHERE status= '404 NOT FOUND' GROUP BY date;```
     
 then you can display this view data by this query:
     
@@ -117,7 +120,6 @@ news=# ```SELECT * FROM errorLogs;```
 you will get 31 rows as output
 
        date        | counterror
--------------------+------------
  july      05,2016 |        423
  july      20,2016 |        383
  july      13,2016 |        383
